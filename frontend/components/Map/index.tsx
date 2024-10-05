@@ -3,6 +3,10 @@ import styles from "./map.module.scss";
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import EventContainer from "../EventContainer";
+// import LocationDescriptionHook from "../LocationDescription";
+import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
+import LocationDescriptionHook from "../LocationDescription";
 
 const MapComponent = () => {
   const [map, setMap] = useState<L.Map | null>(null);
@@ -10,6 +14,30 @@ const MapComponent = () => {
     "Click on the map to get the location name."
   );
   const [showDescription, setShowDescription] = useState(false);
+  
+  
+  const [summary, setSummary] = useState(null);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getDeforestationSummary(location);
+      setSummary(result);
+    };
+    
+    fetchData();
+  }, [location]);
+  
+  const [ress, setRess] = useState('');
+
+  useEffect(() => {
+    const ff = async() => {
+      const locationTxt = await LocationDescriptionHook({ location: locationName });
+      setRess(locationTxt)
+    }
+
+    ff();
+  }, [locationName]);
+
 
   useEffect(() => {
     const mapInstance = L.map("map", {
@@ -74,18 +102,19 @@ const MapComponent = () => {
 
   return (
     <>
+      <div className={`${styles.event_container}`}>
+        <EventContainer />
+      </div>
       <div className={`${styles.location_name}`}>
         <h2>{locationName}</h2>
         {showDescription && (
           <div>
             <hr />
-            <p>
-              In this location, due to urbanization there is lot of
-              deforestation.
-            </p>
+            <p>{summary}</p>
           </div>
         )}
       </div>
+
       <div className={`${styles.map_wrapper}`}>
         <div id="map" className={`${styles.map}`}></div>
       </div>

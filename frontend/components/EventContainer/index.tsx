@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './EventContainer.scss';
+import styles from "./event.module.scss";
 
 interface Event {
   title: string;
@@ -11,19 +11,14 @@ const EventContainer: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [events] = useState<Event[]>([
     {
-      title: 'Event 1',
-      description: 'Description for Event 1',
-      location: 'Location 1',
+      title: 'Tree planetary',
+      description: 'We are planning to do tree plantation on the land of the historical forest of seattle.',
+      location: 'Seattle',
     },
     {
-      title: 'Event 2',
-      description: 'Description for Event 2',
-      location: 'Location 2',
-    },
-    {
-      title: 'Event 3',
-      description: 'Description for Event 3',
-      location: 'Location 3',
+      title: 'Tree planetary',
+      description: 'We are planning to do tree plantation on the land of the historical forest of seattle.',
+      location: 'Seattle',
     },
   ]);
 
@@ -36,29 +31,32 @@ const EventContainer: React.FC = () => {
   };
 
   return (
-    <div className="event-container">
-      <div className="header">
-        <h2>Events</h2>
-        <button onClick={handleButtonClick} className="create-event-button">
-          Create Event
-        </button>
-      </div>
+    <div className={`${styles.event_container}`}>
       <input
         type="text"
         placeholder="Search Events"
         value={searchTerm}
         onChange={handleSearchChange}
-        className="search-bar"
+        className={`${styles.search_bar}`}
       />
-      <div className="events-list">
+
+      <div className={`${styles.header}`}>
+        <p>Events</p>
+        <button onClick={handleButtonClick} className={`${styles.create_event_button}`}>
+          Add Event
+        </button>
+      </div>
+      
+      <div className={`${styles.events_list}`}>
         {events
           .filter(event => event.title.toLowerCase().includes(searchTerm.toLowerCase()))
           .map((event, index) => (
-            <div key={index} className="event-card">
+            <div key={index} className={`${styles.event_card}`}>
               <h3>{event.title}</h3>
               <p>{event.description}</p>
-              <p className="location">{event.location}</p>
+              <p className={`${styles.location}`}>{event.location}</p>
             </div>
+
           ))}
       </div>
     </div>
