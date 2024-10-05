@@ -34,3 +34,9 @@ body {
   max-width: 1130px;
   margin-inline: auto;
 }
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
