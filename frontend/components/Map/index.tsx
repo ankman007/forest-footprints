@@ -1,62 +1,96 @@
-'use client';
-import styles from './map.module.scss';
-import React, { SetStateAction, useEffect, useState } from "react";
+"use client";
+import styles from "./map.module.scss";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
-
+import "leaflet/dist/leaflet.css";
 
 const MapComponent = () => {
-    const [map, setMap] = useState<L.Map | null>(null);
-    const [locationName, setLocationName] = useState("Click on the map to get the location name.");
+  const [map, setMap] = useState<L.Map | null>(null);
+  const [locationName, setLocationName] = useState(
+    "Click on the map to get the location name."
+  );
+  const [showDescription, setShowDescription] = useState(false);
 
-    useEffect(() => {
-        const mapInstance = L.map("map").setView([51.505, -0.09], 13);
+  useEffect(() => {
+    const mapInstance = L.map("map", {
+      zoom: 4,
+      minZoom: 3,
+      maxZoom: 20,
+      scrollWheelZoom: true,
+    }).setView([27.7103, 85.3222], 7);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(mapInstance);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(mapInstance);
 
-        setMap(mapInstance);
+    mapInstance.zoomControl.remove();
 
-        return () => {
-            mapInstance.remove();
-        };
-    }, []);
+    const southWest = L.latLng(-90, -180);
+    const northEast = L.latLng(90, 180);
+    const bounds = L.latLngBounds(southWest, northEast);
+    mapInstance.setMaxBounds(bounds);
 
-    const reverseGeocode = async (lat: string, lon: string) => {
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
+    L.control
+      .zoom({
+        position: "bottomright",
+      })
+      .addTo(mapInstance);
 
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data && data.display_name) {
-                setLocationName(`Location: ${data.display_name}`);
-            } else {
-                setLocationName("No location found.");
-            }
-        } catch (error) {
-            console.error("Error fetching location:", error);
-            setLocationName("Error fetching location.");
-        }
+    setMap(mapInstance);
+
+    return () => {
+      mapInstance.remove();
     };
+  }, []);
 
-    useEffect(() => {
-        if (map) {
-            map.on("click", function (e) {
-                const { lat, lng } = e.latlng;
-                reverseGeocode(lat, lng);
-            });
-        }
-    }, [map]);
+  const reverseGeocode = async (lat: string, lon: string) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
 
-    return (
-        <div className={`${styles.map_wrapper}`}>
-            <h1>Click on the map to get the location name</h1>
-            <div id="map" style={{ height: "500px", width: "100%" }}></div>
-            <div id="location-name" style={{ marginTop: "10px", fontSize: "18px" }}>
-                {locationName}
-            </div>
-        </div>
-    );
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data && data.display_name) {
+        setLocationName(`Location: ${data.display_name}`);
+        setShowDescription(true);
+      } else {
+        setLocationName("No location found.");
+        setShowDescription(false);
+      }
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      setLocationName("Error fetching location.");
+    }
+  };
+
+  useEffect(() => {
+    if (map) {
+      map.on("click", function (e) {
+        const { lat, lng } = e.latlng;
+        reverseGeocode(lat, lng);
+      });
+    }
+  }, [map]);
+
+  return (
+    <>
+      <div className={`${styles.location_name}`}>
+        <h2>{locationName}</h2>
+        {showDescription && (
+          <div>
+            <hr />
+            <p>
+              In this location, due to urbanization there is lot of
+              deforestation.
+            </p>
+          </div>
+        )}
+      </div>
+      <div className={`${styles.map_wrapper}`}>
+        <div id="map" className={`${styles.map}`}></div>
+      </div>
+    </>
+  );
 };
 
 export default MapComponent;
