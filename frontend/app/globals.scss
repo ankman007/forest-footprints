@@ -18,6 +18,13 @@
   }
 }
 
+input {
+  &:focus-visible {
+    outline: 1px solid $primary-47;
+    border: none;
+  }
+}
+
 body {
   color: var(--foreground);
   background: $primary-90;
@@ -32,7 +39,9 @@ body {
 
 .custom-container {
   max-width: 1130px;
+  width: 100%;
   margin-inline: auto;
+  padding-inline: 12px;
 }
 
 .flex-center {

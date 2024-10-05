@@ -1,3 +1,37 @@
-.navbar_wrapper{
-    
+@import '../../app/colors';
+
+.navbar_wrapper {
+    .nav_link {
+        position: relative;
+        transition: .4;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding-inline: 8px;
+        border-radius: 4px;
+
+        &.down::before {
+            position: absolute;
+            content: '';
+            height: 2px;
+            border-radius: 100px;
+            left: 0;
+            right: 0;
+            width: 0%;
+            margin-inline: auto;
+            bottom: 0;
+            background-color: $primary-10;
+            transition: .2s;
+        }
+
+        &:hover::before {
+            width: 100%;
+        }
+
+        &.active {
+            &::before {
+                width: 100%;
+            }
+        }
+    }
 }
