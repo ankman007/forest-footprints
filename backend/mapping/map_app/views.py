@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework.authtoken.models import Token
 @csrf_exempt
 @api_view(['POST'])
 def register(request):
@@ -42,14 +42,16 @@ def login(request):
     print(data)
     # Validate required fields
     if 'username' not in data or 'password' not in data:
-        return Response({"message": "Username and password are required"}, status=400, success= False)
+        return Response({"message": "Username and password are required", "success": False}, status=400)
 
     user = authenticate(username=data['username'], password=data['password'])
 
     if user is not None:
-        return Response({"message": "Login successful"}, status=200, success= True)
+        user_email = User.objects.get(username=data["username"]).email
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({"message": "Login successful", "token": token.key, "success": True, "email":user_email}, status=200)
     else:
-        return Response({"message": "Invalid username or password"}, status=401, success= False)
+        return Response({"message": "Invalid username or password", "success": False}, status=401)
 
 @csrf_exempt
 @api_view(['POST'])
@@ -78,11 +80,10 @@ def createEvent(request):
 @api_view(['GET'])
 def getEvents(request):
     events = Campaign.objects.all()
-     # Adjust to your needs
     eventsList = []
     for event in events:
         event_dict = model_to_dict(event, fields={'organizer', "description", "date", "location"})
         event_dict['organizer'] = event.organizer.username
         eventsList.append(event_dict)
     print(eventsList)
-    return Response(eventsList, status=200, success= True)        
+    return Response({"data": eventsList, "success": True}, status=200)
