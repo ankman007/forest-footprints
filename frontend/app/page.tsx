@@ -1,18 +1,51 @@
+'use client'
+
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
+import type { Metadata } from 'next'
+import { useEffect, useRef } from "react";
+
+
 
 export default function Home() {
+
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const video: any = videoRef.current;
+      const scrollPosition = window.scrollY;
+      const videoHeight = video.offsetHeight;
+      const videoTop = video.offsetTop;
+      const videoBottom = videoTop + videoHeight;
+
+      if (scrollPosition >= videoTop && scrollPosition <= videoBottom) {
+        // Play the video when scrolling down
+        video.play();
+      } else {
+        // Pause the video when scrolling up
+        video.pause();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <Navbar />
-      
+
       <div className="main-wrapper">
-        <video muted loop autoPlay className="fixed left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-60">
+        <video ref={videoRef} muted loop autoPlay className="fixed lg:object-[-40px] left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-60">
           <source className="w-[100vw] h-[100vh] object-cover" src="/images/main-vid.mp4" type="video/mp4" />
         </video>
 
         <main className="flex-center h-[100vh] w-100">
-          <h1 className="m-auto text-center color-neutral-0 text-[64px] font-bold">FOREST FOOTPRINT</h1>
+          <h1 className="m-auto text-center color-neutral-0 text-[56px] lg:text-[64px] font-bold">FOREST FOOTPRINT</h1>
         </main>
 
         <div className="bg-primary-90">
@@ -92,13 +125,13 @@ export default function Home() {
                 <div className="step">
                   <Image className="w-full mb-[8px]" src={`/images/step-2.png`} alt="step-1" width={500} height={400} />
 
-                  <div className="text-center color-primary-20 text-[16px]">Setp 1: Access the interactive Map</div>
+                  <div className="text-center color-primary-20 text-[16px]">Step 2: Select a location to to explore</div>
                 </div>
 
                 <div className="step">
                   <Image className="w-full mb-[8px]" src={`/images/step-3.png`} alt="step-1" width={500} height={400} />
 
-                  <div className="text-center color-primary-20 text-[16px]">Setp 1: Access the interactive Map</div>
+                  <div className="text-center color-primary-20 text-[16px]">Step 3: Participation in the event</div>
                 </div>
               </div>
             </section>
