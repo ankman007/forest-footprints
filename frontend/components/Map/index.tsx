@@ -4,12 +4,13 @@ import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import EventContainer from "../EventContainer";
+import LayerContainer from "../LayerContainer";
 import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
 
 const MapComponent = () => {
   const [map, setMap] = useState<L.Map | null>(null);
   const [locationName, setLocationName] = useState(
-    "Click on the map to get the location name."
+    "Click on the map to get the location name and its deforestation state."
   );
   const [showDescription, setShowDescription] = useState(false);
 
@@ -91,7 +92,7 @@ const MapComponent = () => {
       <div className={`${styles.event_container}`}>
         <EventContainer />
       </div>
-      <div className={`${styles.layers_container}`}>
+      <div className={`${styles.layer_container}`}>
         <LayerContainer />
       </div>
       <div className={`${styles.location_name}`}>

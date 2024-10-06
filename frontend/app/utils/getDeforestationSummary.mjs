@@ -16,7 +16,7 @@ export async function getDeforestationSummary(location) {
     if (location.includes("Kathmandu")) {
         data_present = true;
     }
-    const prompt = `Generate a concise, two-line summary about deforestation in ${location} with relation to this ${JSON.stringify(data_for_ktm)} if the location is Kathmandu, if it is not Kathmandu ignore this data. Include information on the extent of deforestation, its impact on vegetation and plants, and any relevant statistics. It can be of general area or region, no need to be too specific about the region I've given. The summary should be no longer than 150 characters or 17 words.`;
+    const prompt = `Generate a concise, two-line summary about deforestation in ${location}. Include information on the extent of deforestation, its impact on vegetation and plants, and any relevant statistics. It can be of general area or region, no need to be too specific about the region I've given. The summary should be no longer than 150 characters or 17 words. If and only case when location is Kathmandu region, use this ${JSON.stringify(data_for_ktm)} as reference and provide summary.`;
 
     const result = await model.generateContent(prompt);
     console.log(result.response.text());
