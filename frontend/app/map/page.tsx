@@ -1,11 +1,23 @@
-import MapComponent from "@/components/Map"
-import Navbar from "@/components/Navbar"
+
+import dynamic from "next/dynamic"
+
+
+const DynamicNabar = dynamic(
+    () => import('@/components/Navbar'),
+    { ssr: false }
+)
+
+const DynamicMapComponent = dynamic(
+    () => import('@/components/Map'),
+    { ssr: false }
+)
+
 
 const MapPage = () => {
     return (
         <>
-            <Navbar />
-            <MapComponent />
+            <DynamicNabar />
+            <DynamicMapComponent />
         </>
     )
 }
