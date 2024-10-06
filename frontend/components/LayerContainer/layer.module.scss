@@ -1,9 +1,14 @@
 .layer_container {
-  padding: 20px;
+  padding: 16px 12px;
+  padding-bottom: 8px;
+
   background-color: #f9f9f9;
   max-width: 400px;
+
   .layer_list {
     padding-top: 20px;
+    display: flex;
+    gap: 16px;
 
     .checkbox {
       margin-bottom: 10px;

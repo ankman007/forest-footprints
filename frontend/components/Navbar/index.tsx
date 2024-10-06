@@ -57,7 +57,7 @@ const Navbar = () => {
     }, [isDesktop]);
 
     return (
-        <div className={`${styles.navbar_wrapper} fixed top-0 left-0 right-0 bg-primary-94 h-[60px] flex items-center`}>
+        <div className={`${styles.navbar_wrapper} z-[10000] fixed top-0 left-0 right-0 bg-primary-94 h-[60px] flex items-center`}>
             <div className="custom-container">
                 <div className="flex  justify-between items-center">
                     <Image src={'/images/logo.png'} width={40} height={35} alt='logo' />

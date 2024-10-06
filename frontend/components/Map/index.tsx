@@ -96,11 +96,11 @@ const MapComponent = () => {
         <LayerContainer />
       </div>
       <div className={`${styles.location_name}`}>
-        <h2>{locationName}</h2>
+        <h2 className="color-neutral-40 font-medium text-[16px]">{locationName}</h2>
         {showDescription && (
-          <div>
-            <hr />
-            <p>{summary}</p>
+          <div className="color-neutral-30 text-[14px]">
+            <hr className=""/>
+            <p className="mt-[8px]">{summary}</p>
           </div>
         )}
       </div>

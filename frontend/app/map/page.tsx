@@ -1,8 +1,12 @@
 import MapComponent from "@/components/Map"
+import Navbar from "@/components/Navbar"
 
 const MapPage = () => {
     return (
-        <MapComponent />
+        <>
+            <Navbar />
+            <MapComponent />
+        </>
     )
 }
 
