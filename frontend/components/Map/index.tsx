@@ -1,14 +1,14 @@
 "use client";
 import styles from "./map.module.scss";
 import React, { useEffect, useState } from "react";
-import L from "leaflet";
+import L, { Map } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import EventContainer from "../EventContainer";
 import LayerContainer from "../LayerContainer";
 import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
 
 const MapComponent = () => {
-  const [map, setMap] = useState<L.Map | null>(null);
+  const [map, setMap] = useState<Map | null>(null);
   const [locationName, setLocationName] = useState(
     "Click on the map to get the location name and its deforestation state."
   );
