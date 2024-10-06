@@ -21,12 +21,12 @@ export default function LayerContainer() {
     <>
       <div className={`${styles.layer_container}`}>
         <div className={`${styles.header}`}>
-          <p>Layers</p>
+          <p className="color-primary-90">Layers</p>
         </div>
 
         <div className={`${styles.layer_list}`}>
           <div className={`${styles.checkbox}`}>
-            <label>
+            <label className="color-neutral-30">
               <input
                 type="checkbox"
                 name="country"
@@ -38,7 +38,7 @@ export default function LayerContainer() {
           </div>
 
           <div className={`${styles.checkbox}`}>
-            <label>
+            <label className="color-neutral-30">
               <input
                 type="checkbox"
                 name="region"
@@ -50,7 +50,7 @@ export default function LayerContainer() {
           </div>
 
           <div className={`${styles.checkbox}`}>
-            <label>
+            <label className="color-neutral-30">
               <input
                 type="checkbox"
                 name="district"
