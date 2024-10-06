@@ -18,7 +18,7 @@ const MapComponent = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getDeforestationSummary(locationName);
+      const result: any = await getDeforestationSummary(locationName);
       setSummary(result);
     };
 
@@ -80,7 +80,7 @@ const MapComponent = () => {
   useEffect(() => {
     if (map) {
       map.on("click", function (e) {
-        const { lat, lng } = e.latlng;
+        const { lat, lng }: any = e.latlng;
         reverseGeocode(lat, lng);
       });
     }
@@ -99,7 +99,7 @@ const MapComponent = () => {
         <h2 className="color-neutral-40 font-medium text-[16px]">{locationName}</h2>
         {showDescription && (
           <div className="color-neutral-30 text-[14px]">
-            <hr className=""/>
+            <hr className="" />
             <p className="mt-[8px]">{summary}</p>
           </div>
         )}
