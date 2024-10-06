@@ -1,62 +1,115 @@
-'use client';
-import styles from './map.module.scss';
-import React, { SetStateAction, useEffect, useState } from "react";
+"use client";
+import styles from "./map.module.scss";
+import React, { useEffect, useState } from "react";
 import L from "leaflet";
-
+import "leaflet/dist/leaflet.css";
+import EventContainer from "../EventContainer";
+import LayerContainer from "../LayerContainer";
+import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
 
 const MapComponent = () => {
-    const [map, setMap] = useState<L.Map | null>(null);
-    const [locationName, setLocationName] = useState("Click on the map to get the location name.");
+  const [map, setMap] = useState<L.Map | null>(null);
+  const [locationName, setLocationName] = useState(
+    "Click on the map to get the location name and its deforestation state."
+  );
+  const [showDescription, setShowDescription] = useState(false);
 
-    useEffect(() => {
-        const mapInstance = L.map("map").setView([51.505, -0.09], 13);
+  const [summary, setSummary] = useState(null);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(mapInstance);
-
-        setMap(mapInstance);
-
-        return () => {
-            mapInstance.remove();
-        };
-    }, []);
-
-    const reverseGeocode = async (lat: string, lon: string) => {
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
-
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data && data.display_name) {
-                setLocationName(`Location: ${data.display_name}`);
-            } else {
-                setLocationName("No location found.");
-            }
-        } catch (error) {
-            console.error("Error fetching location:", error);
-            setLocationName("Error fetching location.");
-        }
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await getDeforestationSummary(locationName);
+      setSummary(result);
     };
 
-    useEffect(() => {
-        if (map) {
-            map.on("click", function (e) {
-                const { lat, lng } = e.latlng;
-                reverseGeocode(lat, lng);
-            });
-        }
-    }, [map]);
+    fetchData();
+  }, [locationName]);
 
-    return (
-        <div className={`${styles.map_wrapper}`}>
-            <h1>Click on the map to get the location name</h1>
-            <div id="map" style={{ height: "500px", width: "100%" }}></div>
-            <div id="location-name" style={{ marginTop: "10px", fontSize: "18px" }}>
-                {locationName}
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    const mapInstance = L.map("map", {
+      zoom: 4,
+      minZoom: 3,
+      maxZoom: 20,
+      scrollWheelZoom: true,
+    }).setView([27.7103, 85.3222], 7);
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(mapInstance);
+
+    mapInstance.zoomControl.remove();
+
+    const southWest = L.latLng(-90, -180);
+    const northEast = L.latLng(90, 180);
+    const bounds = L.latLngBounds(southWest, northEast);
+    mapInstance.setMaxBounds(bounds);
+
+    L.control
+      .zoom({
+        position: "bottomright",
+      })
+      .addTo(mapInstance);
+
+    setMap(mapInstance);
+
+    return () => {
+      mapInstance.remove();
+    };
+  }, []);
+
+  const reverseGeocode = async (lat: string, lon: string) => {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      if (data && data.display_name) {
+        setLocationName(`Location: ${data.display_name}`);
+        setShowDescription(true);
+      } else {
+        setLocationName("No location found.");
+        setShowDescription(false);
+      }
+    } catch (error) {
+      console.error("Error fetching location:", error);
+      setLocationName("Error fetching location.");
+    }
+  };
+
+  useEffect(() => {
+    if (map) {
+      map.on("click", function (e) {
+        const { lat, lng } = e.latlng;
+        reverseGeocode(lat, lng);
+      });
+    }
+  }, [map]);
+  console.log(summary);
+
+  return (
+    <>
+      <div className={`${styles.event_container}`}>
+        <EventContainer />
+      </div>
+      <div className={`${styles.layer_container}`}>
+        <LayerContainer />
+      </div>
+      <div className={`${styles.location_name}`}>
+        <h2>{locationName}</h2>
+        {showDescription && (
+          <div>
+            <hr />
+            <p>{summary}</p>
+          </div>
+        )}
+      </div>
+
+      <div className={`${styles.map_wrapper}`}>
+        <div id="map" className={`${styles.map}`}></div>
+      </div>
+    </>
+  );
 };
 
 export default MapComponent;
