@@ -1,0 +1,80 @@
+.event_container {
+  padding: 20px;
+  // border: 1px solid #ccc;
+  // border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 400px;
+
+  .header {
+    display: flex;
+    // align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    p {
+      margin: 0;
+      font-weight: 600;
+      font-size: large;
+    }
+
+    .create_event_button {
+      padding: 5px 5px;
+      background-color: #129490;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-size: medium;
+
+      &:hover {
+        background-color: #0f7a6c;
+      }
+    }
+  }
+
+  .search_bar {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    margin-bottom: 20px;
+
+    &:focus {
+      outline: none;
+      border-color: #129490;
+    }
+  }
+
+  .events_list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .event_card {
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: white;
+      transition: box-shadow 0.3s;
+
+      &:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      h3 {
+        margin: 0;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 5px 0;
+      }
+
+      .location {
+        font-size: 0.9rem;
+        color: gray;
+      }
+    }
+  }
+}
