@@ -9,6 +9,12 @@
         align-items: center;
         padding-inline: 8px;
         border-radius: 4px;
+        transition: .3s;
+
+        &:hover {
+            transition: .3s;
+            background-color: $primary-80;
+        }
 
         &.down::before {
             position: absolute;
@@ -31,6 +37,56 @@
         &.active {
             &::before {
                 width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 922px) {
+    .navlink_wrapper.active {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        background-color: $neutral-0;
+        z-index: 10000;
+        padding: 12px;
+        max-width: 350px;
+        width: 100%;
+        transform: translate(-50%, -50%);
+        background: $primary-10;
+        color: $primary-90;
+        border-radius: 8px;
+        animation: down_top .6s;
+
+        @keyframes down_top {
+            from {
+                margin-top: 12px;
+                opacity: 0;
+            }
+            
+            to {
+                margin-top: 0;
+                opacity: 1;
+            }
+        }
+
+        li {
+            width: 100%;
+        }
+
+        .nav_link {
+            margin: auto;
+            display: inline-flex;
+            width: 100%;
+            align-items: center;
+        }
+
+        .nav_link.down {
+            color: $primary-90 !important;
+            width: 100% !important;
+
+            &:hover {
+                background: $primary-20 !important;
             }
         }
     }
