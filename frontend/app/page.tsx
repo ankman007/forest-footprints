@@ -11,7 +11,9 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // @ts-ignore
+      // @ts-expect-error STFU
+
+
       const video: HTMLVideoElement = videoRef.current;
       const scrollPosition = window.scrollY;
       const videoHeight = video.offsetHeight;
