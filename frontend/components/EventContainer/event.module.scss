@@ -3,6 +3,7 @@
   // border: 1px solid #ccc;
   // border-radius: 8px;
   background-color: #f9f9f9;
+  max-width: 400px;
 
   .header {
     display: flex;
@@ -48,7 +49,7 @@
   .events_list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
 
     .event_card {
       padding: 15px;

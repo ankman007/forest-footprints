@@ -4,9 +4,7 @@ import React, { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import EventContainer from "../EventContainer";
-// import LocationDescriptionHook from "../LocationDescription";
 import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
-import LocationDescriptionHook from "../LocationDescription";
 
 const MapComponent = () => {
   const [map, setMap] = useState<L.Map | null>(null);
@@ -14,30 +12,17 @@ const MapComponent = () => {
     "Click on the map to get the location name."
   );
   const [showDescription, setShowDescription] = useState(false);
-  
-  
+
   const [summary, setSummary] = useState(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getDeforestationSummary(location);
+      const result = await getDeforestationSummary(locationName);
       setSummary(result);
     };
-    
+
     fetchData();
-  }, [location]);
-  
-  const [ress, setRess] = useState('');
-
-  useEffect(() => {
-    const ff = async() => {
-      const locationTxt = await LocationDescriptionHook({ location: locationName });
-      setRess(locationTxt)
-    }
-
-    ff();
   }, [locationName]);
-
 
   useEffect(() => {
     const mapInstance = L.map("map", {
@@ -99,11 +84,15 @@ const MapComponent = () => {
       });
     }
   }, [map]);
+  console.log(summary);
 
   return (
     <>
       <div className={`${styles.event_container}`}>
         <EventContainer />
+      </div>
+      <div className={`${styles.layers_container}`}>
+        <LayerContainer />
       </div>
       <div className={`${styles.location_name}`}>
         <h2>{locationName}</h2>

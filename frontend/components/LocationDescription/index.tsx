@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 const LocationDescriptionHook: React.FC<{ location: string }> = ({
   location,
 }) => {
-  const text = '';
+  let text = '';
   useEffect(() => {
     text = getDeforestationSummary(location);
   }, []);
