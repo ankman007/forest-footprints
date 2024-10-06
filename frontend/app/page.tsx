@@ -10,9 +10,9 @@ export default function Home() {
       <Navbar />
 
       <div className="main-wrapper">
-        <video muted loop autoPlay className="fixed lg:object-[-40px] left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-60">
-          <source className="w-[100vw] h-[100vh] object-cover" src="/images/main-vid.mp4" type="video/mp4" />
-        </video>
+        <div className={`main-background fixed lg:object-[-40px] flex-center left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-50`}>
+          <Image src={`/images/main-gif.gif`} width={1300} height={1300} alt="globe" />
+        </div>
 
         <main className="flex-center h-[100vh] w-100">
           <h1 className="m-auto text-center color-neutral-0 text-[56px] lg:text-[64px] font-bold">FOREST FOOTPRINT</h1>
