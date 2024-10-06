@@ -2,46 +2,15 @@
 
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
-
 
 export default function Home() {
-
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // @ts-expect-error STFU
-
-
-      const video: HTMLVideoElement = videoRef.current;
-      const scrollPosition = window.scrollY;
-      const videoHeight = video.offsetHeight;
-      const videoTop = video.offsetTop;
-      const videoBottom = videoTop + videoHeight;
-
-      if (scrollPosition >= videoTop && scrollPosition <= videoBottom) {
-        // Play the video when scrolling down
-        video.play();
-      } else {
-        // Pause the video when scrolling up
-        video.pause();
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <>
       <Navbar />
 
       <div className="main-wrapper">
-        <video ref={videoRef} muted loop autoPlay className="fixed lg:object-[-40px] left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-60">
+        <video muted loop autoPlay className="fixed lg:object-[-40px] left-0 right-0 top-0 bottom-0 object-cover w-[100vw] h-[100vh] -z-10 opacity-60">
           <source className="w-[100vw] h-[100vh] object-cover" src="/images/main-vid.mp4" type="video/mp4" />
         </video>
 
