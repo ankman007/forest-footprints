@@ -2,9 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import type { Metadata } from 'next'
 import { useEffect, useRef } from "react";
-
 
 
 export default function Home() {
@@ -13,7 +11,8 @@ export default function Home() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const video: any = videoRef.current;
+      // @ts-ignore
+      const video: HTMLVideoElement = videoRef.current;
       const scrollPosition = window.scrollY;
       const videoHeight = video.offsetHeight;
       const videoTop = video.offsetTop;

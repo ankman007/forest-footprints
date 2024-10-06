@@ -14,11 +14,11 @@ const MapComponent = () => {
   );
   const [showDescription, setShowDescription] = useState(false);
 
-  const [summary, setSummary] = useState(null);
+  const [summary, setSummary] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const result: any = await getDeforestationSummary(locationName);
+      const result = await getDeforestationSummary(locationName);
       setSummary(result);
     };
 
@@ -58,7 +58,7 @@ const MapComponent = () => {
     };
   }, []);
 
-  const reverseGeocode = async (lat: string, lon: string) => {
+  const reverseGeocode = async (lat: number, lon: number) => {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
 
     try {
@@ -80,7 +80,7 @@ const MapComponent = () => {
   useEffect(() => {
     if (map) {
       map.on("click", function (e) {
-        const { lat, lng }: any = e.latlng;
+        const { lat, lng } = e.latlng;
         reverseGeocode(lat, lng);
       });
     }

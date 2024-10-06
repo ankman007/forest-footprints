@@ -9,7 +9,7 @@ interface Event {
 
 const EventContainer: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [events, setEvents] = useState<Event[]>([
+  const [events] = useState<Event[]>([
     {
       title: 'Tree planetary',
       description: 'We are planning to do tree plantation on the land of the historical forest of seattle.',
