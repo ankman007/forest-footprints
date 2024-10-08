@@ -10,7 +10,7 @@ interface Event {
 }
 
 const EventContainer: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm] = useState('');
   const [isModalopen, setIsmodalOpen] = useState(false);
   const [events] = useState<Event[]>([
     {
@@ -27,10 +27,6 @@ const EventContainer: React.FC = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [location, setLocation] = useState('');
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-  };
 
   const toggleModal = () => {
     setIsmodalOpen(!isModalopen);

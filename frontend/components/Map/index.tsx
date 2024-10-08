@@ -36,7 +36,7 @@ const MapComponent = () => {
     };
   
     fetchData();
-  }, [locationName]);
+  }, [locationName, summary]);
   
 
   useEffect(() => {
