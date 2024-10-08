@@ -8,23 +8,36 @@ import EventContainer from "../EventContainer";
 import LayerContainer from "../LayerContainer";
 import { getDeforestationSummary } from "@/app/utils/getDeforestationSummary.mjs";
 
+const redIcon = new L.Icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  iconSize: [25, 41], 
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.4/images/marker-shadow.png',
+  shadowSize: [41, 41],
+});
+
 const MapComponent = () => {
   const [map, setMap] = useState<L.Map | null>(null);
   const [locationName, setLocationName] = useState(
     "Click on the map to get the location name and its deforestation state."
   );
   const [showDescription, setShowDescription] = useState(false);
-
   const [summary, setSummary] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await getDeforestationSummary(locationName);
-      setSummary(result);
+      console.log("Location Name:", locationName);
+      console.log(summary);
+      if (locationName !== 'No location found.' && locationName !== 'Error fetching location.') {
+        const result = await getDeforestationSummary(locationName);
+        setSummary(result);
+      }
     };
-
+  
     fetchData();
   }, [locationName]);
+  
 
   useEffect(() => {
     const mapInstance = L.map("map", {
@@ -61,12 +74,22 @@ const MapComponent = () => {
 
   const reverseGeocode = async (lat: number, lon: number) => {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=10`;
+    
+    console.log('lat, lon', lat, lon);
+    // console.log('url', url);
 
     try {
+      console.log("this is response 1",);
       const response = await fetch(url);
+      console.log("this is response 2",);
+      console.log("this is response", response);
       const data = await response.json();
+      console.log("data", data);
+      console.log(data.display_name);
       if (data && data.display_name) {
-        setLocationName(`Location: ${data.display_name}`);
+        console.log(data.display_name);
+
+        setLocationName(data.display_name);
         setShowDescription(true);
       } else {
         setLocationName("No location found.");
@@ -80,13 +103,21 @@ const MapComponent = () => {
 
   useEffect(() => {
     if (map) {
+      let marker: L.Marker;
+
       map.on("click", function (e) {
         const { lat, lng } = e.latlng;
         reverseGeocode(lat, lng);
+
+        if (marker) {
+          map.removeLayer(marker);
+        }
+
+        marker = L.marker([lat, lng], { icon: redIcon }).addTo(map);
+
       });
     }
   }, [map]);
-  console.log(summary);
 
   return (
     <>

@@ -2,7 +2,7 @@
 
 Our Project “Forest Footprints” is a prototype that addresses deforestation in Nepal through technology and community action. Using satellite data and AI-generated insights, it helps communities understand deforestation impacts and encourages local conservation efforts. The platform's core focus is raising awareness and empowering collective action for forest preservation.
   
-[Project Link](https://forest-footprints.vercel.app/)
+[Project Link](https://forest-footprints.vercel.app/) <br> <br>
 [Demo Video](https://www.youtube.com/watch?v=4BNBr7I5OlI&ab_channel=ForestFootprint)
 
 ## Technology used
