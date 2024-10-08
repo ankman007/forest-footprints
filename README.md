@@ -1,8 +1,9 @@
 ## Project Description
 
-Our Project “Forest Footprints” is a prototype that addresses deforestation in Nepal through technology and community action. Using satellite data and AI-generated insights, it helps communities understand deforestation impacts and encourages local conservation efforts. Though currently without live map layers, the platform's core focus is raising awareness and empowering collective action for forest preservation.
+Our Project “Forest Footprints” is a prototype that addresses deforestation in Nepal through technology and community action. Using satellite data and AI-generated insights, it helps communities understand deforestation impacts and encourages local conservation efforts. The platform's core focus is raising awareness and empowering collective action for forest preservation.
   
 [Project Link](https://forest-footprints.vercel.app/)
+[Demo Video](https://www.youtube.com/watch?v=4BNBr7I5OlI&ab_channel=ForestFootprint)
 
 ## Technology used
 
@@ -23,7 +24,7 @@ Our Project “Forest Footprints” is a prototype that addresses deforestation 
 
 ## Project Affiliation
 
-This project was submission made by [Ankit Poudel](https://www.linkedin.com/in/ankit-poudel007/), [Shovit Bhatt](https://www.linkedin.com/in/shovit-bhatta-117101248/), [Abhishek Shakya](https://www.linkedin.com/in/abhishek-shakya-42528624a/), [Rekha Angdembe](https://www.linkedin.com/in/rekha-angdembe-8b170b194/), [Aryan Thapa Magar](https://www.linkedin.com/in/aryanthapamagar/) & [Shaksham Ghimire](https://www.linkedin.com/in/sakshamghimire10/) for the Nasa Space Apps Challange 2024 hackathon organized by NRCC on October 5 & 6, 2024.
+This project was submission made by [Abhishek Shakya](https://www.linkedin.com/in/abhishek-shakya-42528624a/), [Ankit Poudel](https://www.linkedin.com/in/ankit-poudel007/), [Aryan Thapa Magar](https://www.linkedin.com/in/aryanthapamagar/), [Rekha Angdembe](https://www.linkedin.com/in/rekha-angdembe-8b170b194/), [Shaksham Ghimire](https://www.linkedin.com/in/sakshamghimire10/) & [Shovit Bhatt](https://www.linkedin.com/in/shovit-bhatta-117101248/) for the Nasa Space Apps Challenge 2024 hackathon organized by NRCC on October 5 & 6, 2024.
 
 
 
